@@ -1,0 +1,28 @@
+{
+  "game": {
+    "app_id": "UNKNOW",
+    "name": "UNKNOW GAME",
+    "c_id": "0"
+  },
+  "appConfigMaps": [
+    {
+      "app_id": "UNKNOW",
+      "config_id": "e5cf2a"
+    }
+  ],
+  "configs": [
+    {
+      "app_id": "UNKNOW",
+      "config_id": "e5cf2a",
+      "config_name": "Default",
+      "config_remarks": "",
+      "services": [
+        {
+          "service_id": "316",
+          "enable": false,
+          "param": {}
+        }
+      ]
+    }
+  ]
+}

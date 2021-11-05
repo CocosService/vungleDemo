@@ -194,7 +194,6 @@ export class Startup extends Component {
                     this.vungleLog(`ad(${placementId}) error: ${error}`);
                 },
 
-                // only android
                 creativeId: (creativeId: string) => {
                     this.vungleLog(`creative id: ${creativeId}`);
                 },

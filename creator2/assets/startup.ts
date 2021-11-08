@@ -108,7 +108,7 @@ export default class NewClass extends cc.Component {
     isAdPlaying: AdStatus;
 
     @property(Console)
-    console: Console;
+    console: Console = null;
 
     @property(cc.Label)
     interstitialLabel: cc.Label = null;

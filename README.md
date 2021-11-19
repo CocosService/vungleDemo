@@ -10,9 +10,12 @@ First, download an Editor at [cocos.com](https://www.cocos.com/creator). If you 
 
 1. Enable Vungle Service
    - open service panel (Click Panel Menu -> Service)
-![](images/0-servicePanel.png)
+
+   ![](images/0-servicePanel.png)
+
    - choose and enable Vungle service
-![](images/1-enableVungle.png)
+
+   ![](images/1-enableVungle.png)
 
 2. Save Vungle APP ID
 ![](images/2-saveParameter.png)

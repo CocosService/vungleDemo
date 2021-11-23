@@ -31,5 +31,5 @@ First, download an Editor at [cocos.com](https://www.cocos.com/creator). If you 
 ### Vungle JS API
 
 After vungle service is enabled, JS SDK will be downloaded automatically. For more information, please refer to the following documents.
-   - [Vungle Service: Getting Started](https://test-service.cocos.com/document/zh/vunglead.html)
-   - [Vungle API](https://test-service.cocos.com/document/api/modules/vungle.html)
+   - [Vungle Service: Getting Started](https://service.cocos.com/document/zh/vunglead.html)
+   - [Vungle API](https://service.cocos.com/document/api/modules/vungle.html)

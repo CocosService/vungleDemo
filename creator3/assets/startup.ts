@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Label, Button, TiledUserNodeData } from 'cc';
+import { _decorator, Component, Label, Button, TiledUserNodeData, sys } from 'cc';
 import { Console } from './prefabs/console';
 const { ccclass, property } = _decorator;
 
@@ -32,15 +32,15 @@ type AdStatus = {
     [index: string]: boolean;
 }
 
-function isAndroid(): boolean {
-    return cc.sys.platform === cc.sys.ANDROID;
+function isAndroid (): boolean {
+    return sys.platform === sys.Platform.ANDROID;
 }
 
-function isIOS(): boolean {
-    return cc.sys.platform === cc.sys.IPAD || cc.sys.platform === cc.sys.IPHONE;
+function isIOS (): boolean {
+    return sys.platform === sys.Platform.IOS;
 }
 
-function getPlacementId(adType: string): string {
+function getPlacementId (adType: string): string {
     let placementID: PlacementID;
     if (isAndroid()) {
         placementID = AndroidPlacementID;
@@ -61,12 +61,12 @@ function getPlacementId(adType: string): string {
     }
 }
 
-function getAdConfig(adType: string): vungle.AdConfig {
-    let adSize : vungle.AdSize = vungle.AdSize.BANNER;
+function getAdConfig (adType: string): vungle.AdConfig {
+    let adSize: vungle.AdSize = vungle.AdSize.BANNER;
     if (adType == "mrec") {
         adSize = vungle.AdSize.MREC;
     }
-    const adConfig : vungle.AdConfig = {
+    const adConfig: vungle.AdConfig = {
         muted: true,
         orientation: vungle.OrientationType.AUTO_ROTATE,
         incentivizedFields: {
@@ -81,12 +81,12 @@ function getAdConfig(adType: string): vungle.AdConfig {
     return adConfig;
 }
 
-function getBannerConfig(adType: string): vungle.BannerConfig {
-    let adSize : vungle.AdSize = vungle.AdSize.BANNER_SHORT;
+function getBannerConfig (adType: string): vungle.BannerConfig {
+    let adSize: vungle.AdSize = vungle.AdSize.BANNER_SHORT;
     if (adType == "mrec") {
         adSize = vungle.AdSize.MREC;
     }
-    const bannerConfig : vungle.BannerConfig = {
+    const bannerConfig: vungle.BannerConfig = {
         adSize: adSize,
         muted: false,
     }
@@ -104,7 +104,7 @@ function getBannerConfig(adType: string): vungle.BannerConfig {
  * ManualUrl = https://docs.cocos.com/creator/3.3/manual/zh/
  *
  */
- 
+
 @ccclass('Startup')
 export class Startup extends Component {
     loadButtons: ButtonDicts;
@@ -149,7 +149,7 @@ export class Startup extends Component {
 
     start () {
         this.nodeInit();
-        const vungleCallbacks:vungle.VungleCallbacks = {
+        const vungleCallbacks: vungle.VungleCallbacks = {
             init: {
                 onSuccess: () => {
                     this.vungleLog('init success');
@@ -228,7 +228,7 @@ export class Startup extends Component {
         this.vungleLog(`CCPA status: ${vungle.vungleService.getCCPAStatus()}`);
     }
 
-    loadAd(event: Event, adType: string) {
+    loadAd (event: Event, adType: string) {
         const placementId = getPlacementId(adType);
         if (vungle.vungleService.isInitialized()) {
             this.vungleLog(`${adType}:${placementId} is loading ...`);
@@ -238,9 +238,9 @@ export class Startup extends Component {
         }
     }
 
-    playAd(event: Event, adType: string) {
+    playAd (event: Event, adType: string) {
         const placementId = getPlacementId(adType);
-        const adConfig : vungle.AdConfig = getAdConfig(adType);
+        const adConfig: vungle.AdConfig = getAdConfig(adType);
         if (vungle.vungleService.canPlayAd(placementId)) {
             this.vungleLog(`play ${adType}:${placementId}`);
             vungle.vungleService.playAd(placementId, adConfig);
@@ -249,9 +249,9 @@ export class Startup extends Component {
         }
     }
 
-    loadBanner(event: Event, adType: string) {
+    loadBanner (event: Event, adType: string) {
         const placementId = getPlacementId(adType);
-        const bannerConfig : vungle.BannerConfig = getBannerConfig(adType);
+        const bannerConfig: vungle.BannerConfig = getBannerConfig(adType);
         if (vungle.vungleService.isInitialized()) {
             this.vungleLog(`${adType}:${placementId} is loading ...`);
             vungle.vungleService.loadBanner(placementId, bannerConfig);
@@ -260,9 +260,9 @@ export class Startup extends Component {
         }
     }
 
-    getBanner(event: Event, adType: string) {
+    getBanner (event: Event, adType: string) {
         const placementId = getPlacementId(adType);
-        const bannerConfig : vungle.BannerConfig = getBannerConfig(adType);
+        const bannerConfig: vungle.BannerConfig = getBannerConfig(adType);
         if (vungle.vungleService.canPlayBanner(placementId, bannerConfig)) {
             this.vungleLog(`play ${adType}:${placementId}`);
             if (adType == 'mrec') {
@@ -275,14 +275,14 @@ export class Startup extends Component {
         }
     }
 
-    destroyBanner(event: Event, adType: string) {
+    destroyBanner (event: Event, adType: string) {
         const placementId = getPlacementId(adType);
         this.vungleLog(`destroy ${adType}:${placementId}`);
         vungle.vungleService.destroyBanner(placementId);
         this.disableCloseButton(placementId);
     }
 
-    nodeInit() {
+    nodeInit () {
         let placementID: PlacementID;
         if (isAndroid()) {
             placementID = AndroidPlacementID;
@@ -326,7 +326,7 @@ export class Startup extends Component {
         }
     }
 
-    initButtons() {
+    initButtons () {
         this.vungleLog("init buttons");
         for (let placementId of Object.keys(this.loadButtons)) {
             this.vungleLog(`enable button placementid:${placementId}`);
@@ -345,7 +345,7 @@ export class Startup extends Component {
         }
     }
 
-    enablePlayButton(placementID: string) {
+    enablePlayButton (placementID: string) {
         const loadButton = this.loadButtons[placementID];
         const playButton = this.playButtons[placementID];
         const closeButton = this.closeButtons[placementID];
@@ -365,7 +365,7 @@ export class Startup extends Component {
         }
     }
 
-    disablePlayButton(placementID: string) {
+    disablePlayButton (placementID: string) {
         const loadButton = this.loadButtons[placementID];
         const playButton = this.playButtons[placementID];
         const closeButton = this.closeButtons[placementID];
@@ -381,7 +381,7 @@ export class Startup extends Component {
         }
     }
 
-    disableCloseButton(placementID: string) {
+    disableCloseButton (placementID: string) {
         const loadButton = this.loadButtons[placementID];
         const closeButton = this.closeButtons[placementID];
 
@@ -391,7 +391,7 @@ export class Startup extends Component {
         }
     }
 
-    vungleLog(msg: string) {
+    vungleLog (msg: string) {
         console.info("ServiceVungleDemo::", msg);
         this.console.log("ServiceVungleDemo::", msg);
     }
